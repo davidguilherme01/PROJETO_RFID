@@ -3,9 +3,7 @@ import {
   FileText,
   HeartPulse,
   Map,
-  MapPin,
   Route,
-  Server,
   Timer,
   Trophy,
   UserCheck,
@@ -17,7 +15,10 @@ import { ProtectedRoute } from '@/components/layout/ProtectedRoute'
 import { PagePlaceholder } from '@/components/shared/PagePlaceholder'
 import { ROUTES } from '@/lib/constants'
 import Home from '@/pages/Home'
+import CheckpointsPage from '@/pages/admin/Checkpoints'
+import CorredoresPage from '@/pages/admin/Corredores'
 import DashboardAdminPage from '@/pages/admin/Dashboard'
+import HardwarePage from '@/pages/admin/Hardware'
 import Login from '@/pages/auth/Login'
 import SemAcesso from '@/pages/auth/SemAcesso'
 
@@ -44,13 +45,7 @@ export const router = createBrowserRouter([
           },
           {
             path: ROUTES.ADMIN.CORREDORES,
-            element: (
-              <PagePlaceholder
-                title="Corredores"
-                description="Cadastro, edição e consulta dos atletas inscritos."
-                icon={Users}
-              />
-            ),
+            element: <CorredoresPage />,
           },
           {
             path: ROUTES.ADMIN.ESPECTADORES,
@@ -74,23 +69,11 @@ export const router = createBrowserRouter([
           },
           {
             path: ROUTES.ADMIN.HARDWARE,
-            element: (
-              <PagePlaceholder
-                title="Hardware"
-                description="Topologia de leitores RFID, switches e servidores."
-                icon={Server}
-              />
-            ),
+            element: <HardwarePage />,
           },
           {
             path: ROUTES.ADMIN.CHECKPOINTS,
-            element: (
-              <PagePlaceholder
-                title="Checkpoints"
-                description="Configuração de cada ponto de leitura no percurso."
-                icon={MapPin}
-              />
-            ),
+            element: <CheckpointsPage />,
           },
           {
             path: ROUTES.ADMIN.RELATORIOS,

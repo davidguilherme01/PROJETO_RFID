@@ -20,6 +20,14 @@ export type CategoriaCorredor =
   | 'F 40-49'
   | 'F 50+'
 
+export type Sexo = 'M' | 'F' | 'O'
+
+export interface ContatoEmergencia {
+  nome: string
+  telefone: string
+  parentesco: string
+}
+
 export interface Corredor {
   id: string
   nome: string
@@ -31,6 +39,14 @@ export interface Corredor {
   status: StatusCorredor
   dataInscricao: string
   foto?: string
+
+  // Campos opcionais — adicionados pelo formulário de cadastro/edição.
+  // Mocks pré-existentes não os têm preenchidos.
+  email?: string
+  telefone?: string
+  sexo?: Sexo
+  cintaCardiacaId?: string
+  contatoEmergencia?: ContatoEmergencia
 }
 
 export interface Espectador {
