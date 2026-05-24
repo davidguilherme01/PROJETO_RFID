@@ -97,3 +97,22 @@ export interface RankingItem {
   ultimoCheckpoint: string
   bpmAtual: number
 }
+
+// ---------- Autenticação ----------
+
+export type PerfilUsuario = 'administrador' | 'corredor' | 'espectador'
+
+export interface Usuario {
+  id: string
+  nome: string
+  email: string
+  perfil: PerfilUsuario
+  avatar?: string
+  // Preenchido apenas quando perfil === 'corredor'; aponta para Corredor.id.
+  corredorId?: string
+}
+
+export interface SessaoAuth {
+  usuario: Usuario | null
+  isAuthenticated: boolean
+}

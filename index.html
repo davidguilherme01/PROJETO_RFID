@@ -1,10 +1,25 @@
 <!doctype html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RFID Race Manager</title>
+    <title>RaceTrack RFID</title>
+    <script>
+      // Aplica o tema persistido ANTES do React montar para evitar FOUC.
+      // Formato do Zustand persist: { state: { theme: 'dark' | 'light' }, version: ... }
+      (function () {
+        try {
+          var raw = localStorage.getItem('racetrack:theme')
+          var theme = raw ? JSON.parse(raw)?.state?.theme : 'dark'
+          if (theme !== 'light') {
+            document.documentElement.classList.add('dark')
+          }
+        } catch (_) {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>
