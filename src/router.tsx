@@ -2,7 +2,6 @@ import {
   Activity,
   FileText,
   HeartPulse,
-  LayoutDashboard,
   Map,
   MapPin,
   Route,
@@ -18,6 +17,7 @@ import { ProtectedRoute } from '@/components/layout/ProtectedRoute'
 import { PagePlaceholder } from '@/components/shared/PagePlaceholder'
 import { ROUTES } from '@/lib/constants'
 import Home from '@/pages/Home'
+import DashboardAdminPage from '@/pages/admin/Dashboard'
 import Login from '@/pages/auth/Login'
 import SemAcesso from '@/pages/auth/SemAcesso'
 
@@ -40,13 +40,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: ROUTES.ADMIN.DASHBOARD,
-            element: (
-              <PagePlaceholder
-                title="Dashboard Admin"
-                description="Visão geral em tempo real da prova — corredores ativos, leituras por checkpoint e saúde dos dispositivos."
-                icon={LayoutDashboard}
-              />
-            ),
+            element: <DashboardAdminPage />,
           },
           {
             path: ROUTES.ADMIN.CORREDORES,
