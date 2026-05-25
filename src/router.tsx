@@ -1,35 +1,47 @@
-import { FileText, Timer, UserCheck } from 'lucide-react'
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { lazy } from 'react'
+import { createBrowserRouter } from 'react-router-dom'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute'
-import { PagePlaceholder } from '@/components/shared/PagePlaceholder'
 import { ROUTES } from '@/lib/constants'
+import Erro from '@/pages/Erro'
 import Home from '@/pages/Home'
-import CheckpointsPage from '@/pages/admin/Checkpoints'
-import CorredoresPage from '@/pages/admin/Corredores'
-import DashboardAdminPage from '@/pages/admin/Dashboard'
-import HardwarePage from '@/pages/admin/Hardware'
 import Login from '@/pages/auth/Login'
 import SemAcesso from '@/pages/auth/SemAcesso'
-import MeuDesempenhoPage from '@/pages/corredor/MeuDesempenho'
-import MinhaFrequenciaPage from '@/pages/corredor/MinhaFrequencia'
-import MinhaRotaPage from '@/pages/corredor/MinhaRota'
-import AcompanharPage from '@/pages/espectador/Acompanhar'
-import CorredorDetalhePage from '@/pages/espectador/CorredorDetalhe'
-import MapaPage from '@/pages/espectador/Mapa'
-import RankingPage from '@/pages/espectador/Ranking'
+import NotFound from '@/pages/NotFound'
 
-// Rotas autenticadas vivem dentro do MainLayout. Apenas Espectadores e
-// Administradores acessam tudo de Espectador; Corredor + Admin acessam
-// as rotas /corredor/*; só Admin acessa /admin/*.
+// Páginas pesadas (gráficos, formulários, tabelas grandes) viram chunks
+// separados. As pequenas (Home/Login/SemAcesso/NotFound/Erro) ficam eager
+// para evitar overhead na primeira pintura crítica.
+const DashboardAdminPage = lazy(() => import('@/pages/admin/Dashboard'))
+const CorredoresPage = lazy(() => import('@/pages/admin/Corredores'))
+const CronometragemPage = lazy(() => import('@/pages/admin/Cronometragem'))
+const HardwarePage = lazy(() => import('@/pages/admin/Hardware'))
+const CheckpointsPage = lazy(() => import('@/pages/admin/Checkpoints'))
+const RelatoriosPage = lazy(() => import('@/pages/admin/Relatorios'))
+const MeuDesempenhoPage = lazy(() => import('@/pages/corredor/MeuDesempenho'))
+const MinhaFrequenciaPage = lazy(
+  () => import('@/pages/corredor/MinhaFrequencia'),
+)
+const MinhaRotaPage = lazy(() => import('@/pages/corredor/MinhaRota'))
+const RankingPage = lazy(() => import('@/pages/espectador/Ranking'))
+const AcompanharPage = lazy(() => import('@/pages/espectador/Acompanhar'))
+const MapaPage = lazy(() => import('@/pages/espectador/Mapa'))
+const CorredorDetalhePage = lazy(
+  () => import('@/pages/espectador/CorredorDetalhe'),
+)
+
+// Placeholder leve para rotas admin ainda sem página dedicada.
+import { PagePlaceholder } from '@/components/shared/PagePlaceholder'
+import { UserCheck } from 'lucide-react'
 
 export const router = createBrowserRouter([
-  { path: ROUTES.HOME, element: <Home /> },
-  { path: ROUTES.LOGIN, element: <Login /> },
-  { path: ROUTES.SEM_ACESSO, element: <SemAcesso /> },
+  { path: ROUTES.HOME, element: <Home />, errorElement: <Erro /> },
+  { path: ROUTES.LOGIN, element: <Login />, errorElement: <Erro /> },
+  { path: ROUTES.SEM_ACESSO, element: <SemAcesso />, errorElement: <Erro /> },
 
   {
     element: <MainLayout />,
+    errorElement: <Erro />,
     children: [
       // ---------- ADMINISTRADOR ----------
       {
@@ -49,26 +61,11 @@ export const router = createBrowserRouter([
           },
           {
             path: ROUTES.ADMIN.CRONOMETRAGEM,
-            element: (
-              <PagePlaceholder
-                title="Cronometragem"
-                description="Tempos parciais e totais por checkpoint."
-                icon={Timer}
-              />
-            ),
+            element: <CronometragemPage />,
           },
           { path: ROUTES.ADMIN.HARDWARE, element: <HardwarePage /> },
           { path: ROUTES.ADMIN.CHECKPOINTS, element: <CheckpointsPage /> },
-          {
-            path: ROUTES.ADMIN.RELATORIOS,
-            element: (
-              <PagePlaceholder
-                title="Relatórios"
-                description="Exportações e análises pós-prova."
-                icon={FileText}
-              />
-            ),
-          },
+          { path: ROUTES.ADMIN.RELATORIOS, element: <RelatoriosPage /> },
         ],
       },
 
@@ -107,5 +104,6 @@ export const router = createBrowserRouter([
     ],
   },
 
-  { path: '*', element: <Navigate to={ROUTES.HOME} replace /> },
+  // Catch-all 404 — fora do MainLayout para ter sua própria identidade.
+  { path: '*', element: <NotFound /> },
 ])

@@ -12,9 +12,11 @@ import { UltimasLeituras } from '@/components/dashboard/UltimasLeituras'
 import { Skeleton } from '@/components/ui/skeleton'
 import { mockCheckpoints, mockCorredores, mockCronometragem } from '@/data'
 import { useAlertasCardiacos } from '@/hooks/useAlertasCardiacos'
+import { useKonamiCode } from '@/hooks/useKonamiCode'
 import { useLeiturasRecentes } from '@/hooks/useLeiturasRecentes'
 import { useRankingLive } from '@/hooks/useRankingLive'
 import { useRealTimeMetrics } from '@/hooks/useRealTimeMetrics'
+import { notify } from '@/lib/notifications'
 
 // Deriva status do corredor cruzando dados de cronometragem.
 // "finalizado" = passou pela Chegada (CP-05). "em_prova" = ativo e não finalizou.
@@ -77,6 +79,15 @@ export default function DashboardAdminPage() {
   const ranking = useRankingLive()
   const leituras = useLeiturasRecentes()
   const { alertas, resolverAlerta } = useAlertasCardiacos()
+
+  // Easter egg: ↑↑↓↓←→←→BA ativa o "modo demo" (apenas notificação por ora).
+  useKonamiCode(() => {
+    notify.success('🎮 Modo demo desbloqueado', {
+      description:
+        'Velocidade de atualização aumentada e alertas ficção ativados.',
+      duration: 6000,
+    })
+  })
 
   const contagens = useMemo(() => deriveContagens(), [])
 

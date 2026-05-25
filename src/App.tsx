@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { RouterProvider } from 'react-router-dom'
+import { Splash } from '@/components/layout/Splash'
 import { Toaster } from '@/components/ui/sonner'
 import { useThemeStore } from '@/store/themeStore'
 import { router } from './router'
@@ -17,6 +18,7 @@ export default function App() {
 
   return (
     <>
+      <Splash />
       <RouterProvider router={router} />
       <Toaster position="top-right" richColors closeButton />
     </>

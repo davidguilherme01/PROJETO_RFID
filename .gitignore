@@ -18,6 +18,11 @@ dist-ssr
 # Config local do Claude Code
 .claude/
 
+# Env locais (manter .env.example versionado)
+.env
+.env.local
+.env.*.local
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

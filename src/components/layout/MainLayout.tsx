@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { PageLoading } from '@/components/shared/PageLoading'
 import {
   Sheet,
   SheetContent,
@@ -71,7 +72,9 @@ export function MainLayout() {
             key={pathname}
             className="mx-auto w-full max-w-screen-2xl animate-page-fade-in p-4 md:p-6 lg:p-8"
           >
-            <Outlet />
+            <Suspense fallback={<PageLoading />}>
+              <Outlet />
+            </Suspense>
           </div>
         </main>
       </div>

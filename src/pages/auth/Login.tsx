@@ -108,12 +108,17 @@ export default function Login() {
     navigate(ROUTES.HOME, { replace: true })
   }
 
+  // Easter egg: ao digitar "admin" no email, intensifica o glow do hero.
+  const adminMode = email.toLowerCase().includes('admin')
+
   return (
     <div className="grid min-h-screen w-full bg-background text-foreground lg:grid-cols-[3fr_2fr]">
       <aside
         className={cn(
           'relative hidden flex-col justify-between overflow-hidden p-10 lg:flex xl:p-14',
           'bg-gradient-to-br from-primary/20 via-background to-background',
+          'transition-all duration-700',
+          adminMode && 'from-primary/40 via-primary/5',
         )}
       >
         <div
@@ -122,7 +127,10 @@ export default function Login() {
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-primary/15 blur-3xl"
+          className={cn(
+            'pointer-events-none absolute -left-32 top-1/3 h-96 w-96 rounded-full blur-3xl transition-all duration-1000',
+            adminMode ? 'bg-primary/35 scale-125' : 'bg-primary/15',
+          )}
         />
 
         <div className="relative flex items-center gap-3">

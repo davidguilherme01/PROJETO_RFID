@@ -86,6 +86,11 @@ export default {
           '0%': { backgroundColor: 'hsl(var(--destructive) / 0.25)' },
           '100%': { backgroundColor: 'transparent' },
         },
+        // Splash que some no final — usado pelo Splash component.
+        'splash-out': {
+          '0%, 70%': { opacity: '1' },
+          '100%': { opacity: '0', pointerEvents: 'none' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -96,6 +101,7 @@ export default {
         heartbeat: 'heartbeat 1s ease-in-out infinite',
         'highlight-up': 'highlight-up 2s ease-out',
         'highlight-down': 'highlight-down 2s ease-out',
+        'splash-out': 'splash-out 1.6s ease-in-out forwards',
       },
     },
   },
