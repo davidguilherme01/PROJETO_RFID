@@ -34,7 +34,13 @@ const CorredorDetalhePage = lazy(
 import { PagePlaceholder } from '@/components/shared/PagePlaceholder'
 import { UserCheck } from 'lucide-react'
 
-export const router = createBrowserRouter([
+// basename = base do Vite sem barra final. Em dev BASE_URL='/' → ''.
+// Em prod no GH Pages BASE_URL='/PROJETO_RFID/' → '/PROJETO_RFID'.
+// React Router prefixa todos os `to="/foo"` com esse basename automaticamente.
+const ROUTER_BASENAME = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+
+export const router = createBrowserRouter(
+  [
   { path: ROUTES.HOME, element: <Home />, errorElement: <Erro /> },
   { path: ROUTES.LOGIN, element: <Login />, errorElement: <Erro /> },
   { path: ROUTES.SEM_ACESSO, element: <SemAcesso />, errorElement: <Erro /> },
@@ -104,6 +110,8 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // Catch-all 404 — fora do MainLayout para ter sua própria identidade.
-  { path: '*', element: <NotFound /> },
-])
+    // Catch-all 404 — fora do MainLayout para ter sua própria identidade.
+    { path: '*', element: <NotFound /> },
+  ],
+  { basename: ROUTER_BASENAME === '/' ? undefined : ROUTER_BASENAME },
+)
