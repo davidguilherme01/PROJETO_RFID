@@ -70,6 +70,22 @@ export default {
           from: { opacity: '0', transform: 'translateY(4px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
         },
+        // "Thump-thump" cardíaco — duas batidas por ciclo.
+        // O período total é definido via animationDuration (varia com BPM).
+        heartbeat: {
+          '0%, 40%, 100%': { transform: 'scale(1)' },
+          '14%': { transform: 'scale(1.18)' },
+          '28%': { transform: 'scale(1)' },
+          '42%': { transform: 'scale(1.18)' },
+        },
+        'highlight-up': {
+          '0%': { backgroundColor: 'hsl(var(--primary) / 0.25)' },
+          '100%': { backgroundColor: 'transparent' },
+        },
+        'highlight-down': {
+          '0%': { backgroundColor: 'hsl(var(--destructive) / 0.25)' },
+          '100%': { backgroundColor: 'transparent' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -77,6 +93,9 @@ export default {
         'pulse-slow': 'pulse-slow 2.4s ease-in-out infinite',
         'ping-slow': 'ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite',
         'page-fade-in': 'page-fade-in 0.25s ease-out',
+        heartbeat: 'heartbeat 1s ease-in-out infinite',
+        'highlight-up': 'highlight-up 2s ease-out',
+        'highlight-down': 'highlight-down 2s ease-out',
       },
     },
   },

@@ -11,10 +11,12 @@ export const mockUsuarios: Usuario[] = [
   },
   {
     id: 'u-corredor',
-    nome: 'Ana Carolina Silva',
+    nome: 'Thiago Macedo Cavalcanti',
     email: 'corredor@racetrack.com',
     perfil: 'corredor',
-    corredorId: 'COR-001',
+    // COR-018: ainda em prova (pace 315s/km, 17km percorridos aos 90min)
+    // E é monitorado em mockFrequencia — perfeito pra mostrar dados ao vivo.
+    corredorId: 'COR-018',
   },
   {
     id: 'u-espectador',

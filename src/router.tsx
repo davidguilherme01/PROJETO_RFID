@@ -1,14 +1,4 @@
-import {
-  Activity,
-  FileText,
-  HeartPulse,
-  Map,
-  Route,
-  Timer,
-  Trophy,
-  UserCheck,
-  Users,
-} from 'lucide-react'
+import { FileText, Timer, UserCheck } from 'lucide-react'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute'
@@ -21,11 +11,17 @@ import DashboardAdminPage from '@/pages/admin/Dashboard'
 import HardwarePage from '@/pages/admin/Hardware'
 import Login from '@/pages/auth/Login'
 import SemAcesso from '@/pages/auth/SemAcesso'
+import MeuDesempenhoPage from '@/pages/corredor/MeuDesempenho'
+import MinhaFrequenciaPage from '@/pages/corredor/MinhaFrequencia'
+import MinhaRotaPage from '@/pages/corredor/MinhaRota'
+import AcompanharPage from '@/pages/espectador/Acompanhar'
+import CorredorDetalhePage from '@/pages/espectador/CorredorDetalhe'
+import MapaPage from '@/pages/espectador/Mapa'
+import RankingPage from '@/pages/espectador/Ranking'
 
-// Conteúdo real das páginas vem nas Etapas 5–7. Por ora, PagePlaceholder
-// (que já usa PageHeader internamente) preenche cada rota com um stub
-// consistente. O wrapping em MainLayout aplica Sidebar + Header em todas
-// as rotas autenticadas; /login e /sem-acesso ficam de fora.
+// Rotas autenticadas vivem dentro do MainLayout. Apenas Espectadores e
+// Administradores acessam tudo de Espectador; Corredor + Admin acessam
+// as rotas /corredor/*; só Admin acessa /admin/*.
 
 export const router = createBrowserRouter([
   { path: ROUTES.HOME, element: <Home /> },
@@ -39,14 +35,8 @@ export const router = createBrowserRouter([
       {
         element: <ProtectedRoute allowedPerfis={['administrador']} />,
         children: [
-          {
-            path: ROUTES.ADMIN.DASHBOARD,
-            element: <DashboardAdminPage />,
-          },
-          {
-            path: ROUTES.ADMIN.CORREDORES,
-            element: <CorredoresPage />,
-          },
+          { path: ROUTES.ADMIN.DASHBOARD, element: <DashboardAdminPage /> },
+          { path: ROUTES.ADMIN.CORREDORES, element: <CorredoresPage /> },
           {
             path: ROUTES.ADMIN.ESPECTADORES,
             element: (
@@ -67,14 +57,8 @@ export const router = createBrowserRouter([
               />
             ),
           },
-          {
-            path: ROUTES.ADMIN.HARDWARE,
-            element: <HardwarePage />,
-          },
-          {
-            path: ROUTES.ADMIN.CHECKPOINTS,
-            element: <CheckpointsPage />,
-          },
+          { path: ROUTES.ADMIN.HARDWARE, element: <HardwarePage /> },
+          { path: ROUTES.ADMIN.CHECKPOINTS, element: <CheckpointsPage /> },
           {
             path: ROUTES.ADMIN.RELATORIOS,
             element: (
@@ -94,36 +78,12 @@ export const router = createBrowserRouter([
           <ProtectedRoute allowedPerfis={['corredor', 'administrador']} />
         ),
         children: [
-          {
-            path: ROUTES.CORREDOR.DESEMPENHO,
-            element: (
-              <PagePlaceholder
-                title="Meu Desempenho"
-                description="Pace, tempos por checkpoint e comparação com edições anteriores."
-                icon={Activity}
-              />
-            ),
-          },
+          { path: ROUTES.CORREDOR.DESEMPENHO, element: <MeuDesempenhoPage /> },
           {
             path: ROUTES.CORREDOR.FREQUENCIA,
-            element: (
-              <PagePlaceholder
-                title="Minha Frequência"
-                description="Histórico de BPM ao longo da prova e alertas de zona crítica."
-                icon={HeartPulse}
-              />
-            ),
+            element: <MinhaFrequenciaPage />,
           },
-          {
-            path: ROUTES.CORREDOR.ROTA,
-            element: (
-              <PagePlaceholder
-                title="Minha Rota"
-                description="Trajeto no mapa com checkpoints e tempo decorrido em cada trecho."
-                icon={Route}
-              />
-            ),
-          },
+          { path: ROUTES.CORREDOR.ROTA, element: <MinhaRotaPage /> },
         ],
       },
 
@@ -135,45 +95,12 @@ export const router = createBrowserRouter([
           />
         ),
         children: [
-          {
-            path: ROUTES.ESPECTADOR.RANKING,
-            element: (
-              <PagePlaceholder
-                title="Ranking"
-                description="Classificação ao vivo da prova."
-                icon={Trophy}
-              />
-            ),
-          },
-          {
-            path: ROUTES.ESPECTADOR.ACOMPANHAR,
-            element: (
-              <PagePlaceholder
-                title="Acompanhar"
-                description="Acompanhe um corredor específico em tempo real."
-                icon={Activity}
-              />
-            ),
-          },
-          {
-            path: ROUTES.ESPECTADOR.MAPA,
-            element: (
-              <PagePlaceholder
-                title="Mapa da Corrida"
-                description="Visualização geográfica do percurso e dos checkpoints."
-                icon={Map}
-              />
-            ),
-          },
+          { path: ROUTES.ESPECTADOR.RANKING, element: <RankingPage /> },
+          { path: ROUTES.ESPECTADOR.ACOMPANHAR, element: <AcompanharPage /> },
+          { path: ROUTES.ESPECTADOR.MAPA, element: <MapaPage /> },
           {
             path: ROUTES.ESPECTADOR.CORREDOR_DETALHE,
-            element: (
-              <PagePlaceholder
-                title="Detalhes do Corredor"
-                description="Perfil, parciais e BPM do corredor selecionado."
-                icon={Users}
-              />
-            ),
+            element: <CorredorDetalhePage />,
           },
         ],
       },
